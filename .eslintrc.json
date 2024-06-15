@@ -12,5 +12,16 @@
     "plugin:import/electron",
     "plugin:import/typescript"
   ],
-  "parser": "@typescript-eslint/parser"
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "import/no-unresolved": "off" // Turn off if using eslint-import-resolver-typescript
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true, // Always attempt to resolve types under `<root>@types` directory
+        "project": "." // Adjust this if your tsconfig.json is in a different location
+      }
+    }
+  }
 }
