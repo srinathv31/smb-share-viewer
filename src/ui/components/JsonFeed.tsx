@@ -1,4 +1,4 @@
-import useApi from "../hooks/useApi";
+import useApi from "@/hooks/useApi";
 
 export default function JsonFeed(): JSX.Element {
   const { data, error, loading } = useApi<{ id: number; title: string }[]>(
