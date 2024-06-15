@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import useApi from "../hooks/useApi";
 import { Button } from "./ui/button";
 
@@ -9,6 +10,11 @@ export default function ItemFeed(): JSX.Element {
     queryParams: { q: "test" },
     prefetch: false,
   });
+
+  function handleClick() {
+    refetch();
+    toast("Refetching data...");
+  }
 
   if (loading) {
     return <p>Loading...</p>;
@@ -22,7 +28,7 @@ export default function ItemFeed(): JSX.Element {
     return (
       <>
         <p>No data available</p>
-        <button className="bg-sky-500 p-5 rounded m-3" onClick={refetch}>
+        <button className="bg-sky-500 p-5 rounded m-3" onClick={handleClick}>
           Refetch
         </button>
       </>
@@ -35,7 +41,7 @@ export default function ItemFeed(): JSX.Element {
       <p>
         {data.item_id}: {data.q ?? "No description"}
       </p>
-      <Button onClick={refetch}>Refetch</Button>
+      <Button onClick={handleClick}>Refetch</Button>
     </div>
   );
 }
