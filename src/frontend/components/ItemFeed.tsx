@@ -19,7 +19,7 @@ export default function ItemFeed(): JSX.Element {
       loading: "Loading...",
       success: (res) => {
         if (res.error) {
-          throw new Error("Error");
+          throw new Error(error.message);
         }
         return "Successfully refetched";
       },
