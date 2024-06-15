@@ -12,8 +12,19 @@ export default function ItemFeed(): JSX.Element {
   });
 
   function handleClick() {
-    refetch();
-    toast("Refetching data...");
+    const promise = refetch();
+
+    toast.promise(promise, {
+      richColors: true,
+      loading: "Loading...",
+      success: (res) => {
+        if (res.error) {
+          throw new Error("Error");
+        }
+        return "Successfully refetched";
+      },
+      error: "Error",
+    });
   }
 
   if (loading) {
@@ -21,16 +32,19 @@ export default function ItemFeed(): JSX.Element {
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <>
+        <p>Error: {error.message}</p>
+        <Button onClick={handleClick}>Refetch</Button>
+      </>
+    );
   }
 
   if (!data) {
     return (
       <>
         <p>No data available</p>
-        <button className="bg-sky-500 p-5 rounded m-3" onClick={handleClick}>
-          Refetch
-        </button>
+        <Button onClick={handleClick}>Refetch</Button>
       </>
     );
   }

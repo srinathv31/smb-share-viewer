@@ -9,6 +9,11 @@ interface ApiOptions {
   prefetch?: boolean;
 }
 
+interface FetchDataResult<T> {
+  data: T | null;
+  error: Error | null;
+}
+
 export default function useApi<T = any>(url: string, options?: ApiOptions) {
   const {
     method = "GET",
@@ -31,9 +36,16 @@ export default function useApi<T = any>(url: string, options?: ApiOptions) {
     ? `${url}${serializeQueryParams(queryParams)}`
     : url;
 
-  async function fetchData() {
+  async function fetchData(): Promise<FetchDataResult<T>> {
     setLoading(true);
+
+    // wait 1.5 seconds before fetching data
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     try {
+      // Uncomment this line for real error testing
+      //   throw new Error("Failed to fetch data");
+
       const response = await window.api.fetchData(finalUrl, {
         method,
         headers,
@@ -43,18 +55,21 @@ export default function useApi<T = any>(url: string, options?: ApiOptions) {
         throw new Error(response.error);
       }
       setData(response.data);
+      return { data: response.data, error: null };
     } catch (error) {
       console.error("Fetch data error:", error);
       setError(error as Error);
+      return { data: null, error: error as Error };
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   useEffect(() => {
     if (prefetch) {
       fetchData();
     }
-  }, [finalUrl, method, headers, body, prefetch]);
+  }, []);
 
   return { data, loading, error, refetch: fetchData };
 }
