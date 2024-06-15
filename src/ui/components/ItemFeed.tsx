@@ -1,4 +1,5 @@
 import useApi from "../hooks/useApi";
+import { Button } from "./ui/button";
 
 export default function ItemFeed(): JSX.Element {
   const { data, error, loading, refetch } = useApi<{
@@ -34,7 +35,7 @@ export default function ItemFeed(): JSX.Element {
       <p>
         {data.item_id}: {data.q ?? "No description"}
       </p>
-      <button onClick={refetch}>Refetch</button>
+      <Button onClick={refetch}>Refetch</Button>
     </div>
   );
 }
