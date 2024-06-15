@@ -21,7 +21,9 @@ export default function ItemFeed(): JSX.Element {
     return (
       <>
         <p>No data available</p>
-        <button onClick={refetch}>Refetch</button>
+        <button className="bg-sky-500 p-5 rounded m-3" onClick={refetch}>
+          Refetch
+        </button>
       </>
     );
   }

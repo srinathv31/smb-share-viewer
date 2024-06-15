@@ -8,7 +8,6 @@ export default function App(): JSX.Element {
         I hope you enjoy using basic-electron-react-boilerplate to start your
         dev off right!
       </p>
-      {/* <JsonFeed /> */}
       <ItemFeed />
     </div>
   );
