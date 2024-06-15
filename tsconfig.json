@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "paths": {
       "*": ["node_modules/*"],
-      "@/*": ["./src/ui/*"]
+      "@/*": ["./src/frontend/*"]
     }
   },
   "include": ["src/**/*"]

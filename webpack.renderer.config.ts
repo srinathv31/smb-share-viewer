@@ -21,7 +21,7 @@ export const rendererConfig: Configuration = {
   resolve: {
     extensions: [".js", ".ts", ".jsx", ".tsx", ".css"],
     alias: {
-      "@": path.resolve(__dirname, "src/ui"), // Adjust this to your alias
+      "@": path.resolve(__dirname, "src/frontend"), // Adjust this to your alias
     },
   },
 };
