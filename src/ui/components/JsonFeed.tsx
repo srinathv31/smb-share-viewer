@@ -1,7 +1,10 @@
 import useApi from "../hooks/useApi";
 
 export default function JsonFeed(): JSX.Element {
-  const { data, error, loading } = useApi();
+  const { data, error, loading } = useApi<{ id: number; title: string }[]>(
+    "https://jsonplaceholder.typicode.com/posts",
+    { method: "GET", prefetch: true }
+  );
 
   if (loading) {
     return <p>Loading...</p>;
@@ -19,7 +22,7 @@ export default function JsonFeed(): JSX.Element {
     <div>
       <h1>Json Feed</h1>
       <ul>
-        {data.map((item: any) => (
+        {data.map((item) => (
           <li key={item.id}>{item.title}</li>
         ))}
       </ul>

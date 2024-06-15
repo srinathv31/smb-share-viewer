@@ -1,4 +1,4 @@
-import JsonFeed from "./components/JsonFeed";
+import ItemFeed from "./components/ItemFeed";
 
 export default function App(): JSX.Element {
   return (
@@ -8,7 +8,8 @@ export default function App(): JSX.Element {
         I hope you enjoy using basic-electron-react-boilerplate to start your
         dev off right!
       </p>
-      <JsonFeed />
+      {/* <JsonFeed /> */}
+      <ItemFeed />
     </div>
   );
 }
