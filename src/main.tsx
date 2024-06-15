@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
-import App from "./ui/App";
+
+import App from "@/App";
 
 // Get the container element by its ID
 const container = document.getElementById("root");
