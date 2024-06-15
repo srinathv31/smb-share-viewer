@@ -39,9 +39,6 @@ export default function useApi<T = any>(url: string, options?: ApiOptions) {
   async function fetchData(): Promise<FetchDataResult<T>> {
     setLoading(true);
 
-    // wait 1.5 seconds before fetching data
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     try {
       // Uncomment this line for real error testing
       //   throw new Error("Failed to fetch data");
