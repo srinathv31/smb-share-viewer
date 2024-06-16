@@ -10,9 +10,13 @@ export interface FolderFeedRes {
   contents?: FolderFeedRes[];
 }
 
-export default function FolderFeed(): JSX.Element {
+export default function FolderFeed({
+  folderId,
+}: {
+  folderId: string;
+}): JSX.Element {
   const { data, error, loading, refetch } = useApi<FolderFeedRes[]>(
-    "http://127.0.0.1:8000/folder/1",
+    `http://127.0.0.1:8000/folder/${folderId}`,
     {
       method: "GET",
     }
@@ -31,16 +35,10 @@ export default function FolderFeed(): JSX.Element {
   }
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between my-2">
-        <h1 className="text-2xl">Folder Feed</h1>
-        <RefreshCcw onClick={refetch} role="button" />
-      </div>
-      <ul>
-        {data.map((folder) => (
-          <ListItem key={folder.name} folder={folder} />
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {data.map((folder) => (
+        <ListItem key={folder.name} folder={folder} nested />
+      ))}
+    </ul>
   );
 }

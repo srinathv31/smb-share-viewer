@@ -1,33 +1,52 @@
-import { FileText, Folder, FolderOpen } from "lucide-react";
+import { FileText, Folder, FolderOpen, Square } from "lucide-react";
 import { FolderFeedRes } from "../FolderFeed";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 export default function ListItem({
   folder,
+  nested,
 }: {
   folder: FolderFeedRes;
+  nested?: boolean;
 }): JSX.Element {
   const [expand, setExpand] = useState<boolean>(false);
 
+  function ButtonWrapper({ children }: { children: ReactNode }) {
+    return (
+      <Button variant="outline" size="icon" className="border-none">
+        {children}
+      </Button>
+    );
+  }
+
   const fileIconMap = {
     folder: expand ? (
-      <FolderOpen onClick={() => setExpand(!expand)} />
+      <FolderOpen onClick={() => setExpand(!expand)} role="button" />
     ) : (
-      <Folder onClick={() => setExpand(!expand)} />
+      <>
+        {nested ? (
+          <Folder onClick={() => setExpand(!expand)} role="button" />
+        ) : (
+          <Link to={`/folder/${folder.name}`}>
+            <Folder />
+          </Link>
+        )}
+      </>
     ),
     text: <FileText />,
   };
 
   return (
     <div className="flex flex-col">
-      <li
-        key={folder.name}
-        className="flex justify-between w-full border-b-2 border-gray-200 p-2"
-      >
-        {fileIconMap[folder.type as keyof typeof fileIconMap]}
+      <li key={folder.name} className="flex items-center p-2">
+        <ButtonWrapper>
+          {fileIconMap[folder.type as keyof typeof fileIconMap]}
+        </ButtonWrapper>
         <p>{folder.name}</p>
-        <p>{folder.size}</p>
-        <p>{folder.last_modified}</p>
+        {/* <p>{folder.size}</p>
+        <p>{folder.last_modified}</p> */}
       </li>
       {expand ? (
         <div className="ml-10">
@@ -35,7 +54,7 @@ export default function ListItem({
             <p>Empty Folder</p>
           ) : (
             folder.contents.map((folder) => (
-              <ListItem key={folder.name} folder={folder} />
+              <ListItem key={folder.name} folder={folder} nested />
             ))
           )}
         </div>
